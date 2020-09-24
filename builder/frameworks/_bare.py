@@ -18,6 +18,8 @@
 
 from SCons.Script import DefaultEnvironment
 
+print("Running _bare.py")
+
 env = DefaultEnvironment()
 
 env.Append(
