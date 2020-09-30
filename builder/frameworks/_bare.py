@@ -37,7 +37,6 @@ env.Append(
         "-fdata-sections",
         "-fno-strict-aliasing",
         "-Wall",
-        "-Werror",
         "-nostdlib",
         "-fno-builtin",
         "-fshort-enums"
