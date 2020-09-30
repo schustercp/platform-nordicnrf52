@@ -21,6 +21,7 @@ from SCons.Script import DefaultEnvironment
 env = DefaultEnvironment()
 
 print("Running _bare.py")
+print("_bare.py start env:" + str(env))
 
 env.Append(
     ASFLAGS=["-x", "assembler-with-cpp"],
@@ -71,7 +72,7 @@ env.Append(ASFLAGS=env.get("CCFLAGS", [])[:])
 softdevice_ver = None
 ldscript_path = None
 cpp_defines = env.Flatten(env.get("CPPDEFINES", []))
-print("cpp_defines:" + cpp_defines)
+print("_bare.py cpp_defines:" + str(cpp_defines))
 if "NRF52_S132" in cpp_defines:
     softdevice_ver = "s132"
 elif "NRF51_S130" in cpp_defines:
@@ -114,3 +115,5 @@ if softdevice_ver:
 
     if not ldscript_path:
         print("Warning! Cannot find an appropriate linker script for the required softdevice!")
+
+print("_bare.py end env:" + str(env))
