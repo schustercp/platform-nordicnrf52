@@ -31,9 +31,12 @@ env.Append(
         "-Os",  # optimize for size
         "-ffunction-sections",  # place each function in its own section
         "-fdata-sections",
+        "-fno-strict-aliasing",
         "-Wall",
-        "-mthumb",
-        "-nostdlib"
+        "-Werror",
+        "-nostdlib",
+        "-fno-builtin",
+        "-fshort-enums"
     ],
 
     CXXFLAGS=[
@@ -48,7 +51,6 @@ env.Append(
     LINKFLAGS=[
         "-Os",
         "-Wl,--gc-sections,--relax",
-        "-mthumb",
         "--specs=nano.specs",
         "--specs=nosys.specs"
     ],
@@ -65,6 +67,33 @@ if "BOARD" in env:
             "-mcpu=%s" % env.BoardConfig().get("build.cpu")
         ]
     )
+    if board.get("build.mcu") == "nrf52840":
+        env.Append(
+            CCFLAGS=[
+                "-mthumb",
+                "-mabi=aapcs",
+                "-mfloat-abi=hard",
+                "-mfpu=fpv4-sp-d16"
+            ],
+            LINKFLAGS=[
+                "-mthumb",
+                "-mabi=aapcs",
+                "-mfloat-abi=hard",
+                "-mfpu=fpv4-sp-d16"
+            ],
+            CPPDEFINES=[
+                "FLOAT_ABI_HARD",
+                "NRF52840_XXAA"
+            ],
+        )
+    if board.get("build.softdevice"):
+        env.Append(
+            CPPDEFINES=[
+                "SOFTDEVICE_PRESENT",
+                "%s" % env.BoardConfig().get("build.softdevice")
+            ],
+        )
+
 
 # copy CCFLAGS to ASFLAGS (-x assembler-with-cpp mode)
 env.Append(ASFLAGS=env.get("CCFLAGS", [])[:])
@@ -82,16 +111,15 @@ elif "NRF51_S110" in cpp_defines:
     softdevice_ver = "s110"
 elif "S140" in cpp_defines:
     softdevice_ver = "s140"
+elif "S132" in cpp_defines:
+    softdevice_ver = "s132"
 
 if softdevice_ver:
-
     env.Append(
         CPPPATH=[
             join(FRAMEWORK_DIR, "cores", board.get("build.core"),
                  "SDK", "components", "softdevice", softdevice_ver, "headers")
-        ],
-
-        CPPDEFINES=["%s" % softdevice_ver.upper()]
+        ]
     )
 
     hex_path = join(FRAMEWORK_DIR, "cores", board.get("build.core"),
@@ -103,19 +131,6 @@ if softdevice_ver:
 
     if "SOFTDEVICEHEX" not in env:
         print("Warning! Cannot find an appropriate softdevice binary!")
-
-    # Update linker script:
-    ldscript_dir = join(FRAMEWORK_DIR, "cores",
-                        board.get("build.core"), "SDK",
-                        "components", "softdevice", softdevice_ver,
-                        "toolchain", "armgcc")
-    mcu_family = board.get("build.arduino.ldscript", "").split("_")[1]
-    for f in listdir(ldscript_dir):
-        if f.endswith(mcu_family) and softdevice_ver in f.lower():
-            ldscript_path = join(ldscript_dir, f)
-
-    if not ldscript_path:
-        print("Warning! Cannot find an appropriate linker script for the required softdevice!")
 
 print("End _bare.py")
 print(env.Dump())
