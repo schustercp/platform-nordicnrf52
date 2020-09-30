@@ -23,6 +23,8 @@ env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
 
+PROJECT_DIR = env.get("PROJECT_DIR")
+
 print("Running _bare.py")
 print(env.Dump())
 
