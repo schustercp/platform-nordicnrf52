@@ -55,11 +55,12 @@ env.Append(
 
     LINKFLAGS=[
         "-Os",
-        "-Wl,--gc-sections,--relax",
-        "--specs=nano.specs",
-        "--specs=nosys.specs"
+        "-Wl,--gc-sections",
+        "--specs=nano.specs"
     ],
 
+    # "--specs=nosys.specs"
+    #,--relax
     #LIBS=["c", "gcc", "m", "stdc++", "nosys"]
 )
 
