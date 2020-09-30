@@ -15,7 +15,8 @@
 #
 # Default flags for bare-metal programming (without any framework layers)
 #
-
+from os import listdir
+from os.path import isdir, join
 from SCons.Script import DefaultEnvironment
 
 env = DefaultEnvironment()
