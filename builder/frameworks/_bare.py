@@ -19,7 +19,8 @@
 from SCons.Script import DefaultEnvironment
 
 env = DefaultEnvironment()
-
+platform = env.PioPlatform()
+board = env.BoardConfig()
 
 print("Running _bare.py")
 print(env.Dump())
@@ -41,11 +42,13 @@ env.Append(
 
     CXXFLAGS=[
         "-fno-rtti",
-        "-fno-exceptions"
+        "-fno-exceptions",
+        "-std=gnu++11",
+        "-fno-threadsafe-statics"
     ],
 
     CPPDEFINES=[
-        ("F_CPU", "$BOARD_F_CPU")
+        ("F_CPU", board.get("build.f_cpu"))
     ],
 
     LINKFLAGS=[
@@ -61,10 +64,10 @@ env.Append(
 if "BOARD" in env:
     env.Append(
         CCFLAGS=[
-            "-mcpu=%s" % env.BoardConfig().get("build.cpu")
+            "-mcpu=%s" % board.get("build.cpu")
         ],
         LINKFLAGS=[
-            "-mcpu=%s" % env.BoardConfig().get("build.cpu")
+            "-mcpu=%s" % board.get("build.cpu")
         ]
     )
     if board.get("build.mcu") == "nrf52840":
