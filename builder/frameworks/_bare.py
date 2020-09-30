@@ -139,6 +139,8 @@ if softdevice_ver:
 
     if "SOFTDEVICEHEX" not in env:
         print("Warning! Cannot find an appropriate softdevice binary!")
+    else:
+        print("Using Softdevice: " + env.get("SOFTDEVICEHEX"))
 
 print("End _bare.py")
 print(env.Dump())
