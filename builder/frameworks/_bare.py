@@ -20,8 +20,9 @@ from SCons.Script import DefaultEnvironment
 
 env = DefaultEnvironment()
 
+
 print("Running _bare.py")
-print("_bare.py start env:" + str(env))
+print(env.Dump())
 
 env.Append(
     ASFLAGS=["-x", "assembler-with-cpp"],
@@ -116,4 +117,5 @@ if softdevice_ver:
     if not ldscript_path:
         print("Warning! Cannot find an appropriate linker script for the required softdevice!")
 
-print("_bare.py end env:" + str(env))
+print("End _bare.py")
+print(env.Dump())
