@@ -60,7 +60,7 @@ env.Append(
         "--specs=nosys.specs"
     ],
 
-    LIBS=["c", "gcc", "m", "stdc++", "nosys"]
+    #LIBS=["c", "gcc", "m", "stdc++", "nosys"]
 )
 
 if "BOARD" in env:

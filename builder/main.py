@@ -113,8 +113,6 @@ env.Append(
                 "$OBJCOPY",
                 "-O",
                 "ihex",
-                "-R",
-                ".eeprom",
                 "$SOURCES",
                 "$TARGET"
             ]), "Building $TARGET"),
@@ -137,6 +135,9 @@ env.Append(
         )
     )
 )
+
+#                "-R",
+#                ".eeprom",
 
 if use_adafruit:
     env.Append(
