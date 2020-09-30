@@ -126,13 +126,13 @@ if softdevice_ver:
     env.Append(
         CPPPATH=[
             join(PROJECT_DIR, 
-            softdevice_ver + board.get("build.core") + board.get("build.softdeviceVersion").strip("."),
+            softdevice_ver + board.get("build.core") + str(board.get("build.softdeviceVersion")).strip("."),
             softdevice_ver + "_" + board.get("build.core") + "_" + board.get("build.softdeviceVersion") + "_API",
             "include")
         ]
     )
 
-    hex_path = join(PROJECT_DIR, softdevice_ver + board.get("build.core") + board.get("build.softdeviceVersion").strip("."))
+    hex_path = join(PROJECT_DIR, softdevice_ver + board.get("build.core") + str(board.get("build.softdeviceVersion")).strip("."))
 
     for f in listdir(hex_path):
         if f.endswith(".hex") and f.lower().startswith(softdevice_ver):
