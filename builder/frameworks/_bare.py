@@ -54,9 +54,7 @@ env.Append(
     ],
 
     LINKFLAGS=[
-        "-Os",
-        "-Wl,--gc-sections",
-        "--specs=nano.specs"
+        "-Os"
     ],
 
     # "--specs=nosys.specs"
@@ -85,7 +83,9 @@ if "BOARD" in env:
                 "-mthumb",
                 "-mabi=aapcs",
                 "-mfloat-abi=hard",
-                "-mfpu=fpv4-sp-d16"
+                "-mfpu=fpv4-sp-d16",
+                "-Wl,--gc-sections",
+                "--specs=nano.specs"
             ],
             CPPDEFINES=[
                 "FLOAT_ABI_HARD",
