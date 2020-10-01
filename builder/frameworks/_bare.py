@@ -25,8 +25,8 @@ board = env.BoardConfig()
 
 PROJECT_DIR = env.get("PROJECT_DIR")
 
-print("Running _bare.py")
-print(env.Dump())
+#print("Running _bare.py")
+#print(env.Dump())
 
 env.Append(
     ASFLAGS=["-x", "assembler-with-cpp"],
@@ -143,5 +143,5 @@ if softdevice_ver:
     else:
         print("Using Softdevice: " + env.get("SOFTDEVICEHEX"))
 
-print("End _bare.py")
-print(env.Dump())
+#print("End _bare.py")
+#print(env.Dump())
